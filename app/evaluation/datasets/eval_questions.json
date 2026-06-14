@@ -1,0 +1,127 @@
+{
+  "version": "1.0",
+  "description": "Gold-standard evaluation questions for the Campus Help Agent.",
+  "questions": [
+    {
+      "id": "ac_001",
+      "question": "When does the academic year start?",
+      "category": "academic_calendar",
+      "expected_source": "academic_calendar.pdf"
+    },
+    {
+      "id": "ac_002",
+      "question": "What are the registration deadlines for the upcoming semester?",
+      "category": "academic_calendar",
+      "expected_source": "academic_calendar.pdf"
+    },
+    {
+      "id": "ac_003",
+      "question": "When are the mid-semester examinations scheduled?",
+      "category": "academic_calendar",
+      "expected_source": "academic_calendar.pdf"
+    },
+    {
+      "id": "ac_004",
+      "question": "What are the holiday dates in the academic calendar?",
+      "category": "academic_calendar",
+      "expected_source": "academic_calendar.pdf"
+    },
+    {
+      "id": "ac_005",
+      "question": "When is the end semester exam period?",
+      "category": "academic_calendar",
+      "expected_source": "academic_calendar.pdf"
+    },
+    {
+      "id": "ac_006",
+      "question": "What is the last date to add or drop a course?",
+      "category": "academic_calendar",
+      "expected_source": "academic_calendar.pdf"
+    },
+    {
+      "id": "ex_001",
+      "question": "What is the minimum attendance required to appear for examinations?",
+      "category": "examination",
+      "expected_source": "examination_regulations.pdf"
+    },
+    {
+      "id": "ex_002",
+      "question": "What are the rules for re-examination or supplementary exams?",
+      "category": "examination",
+      "expected_source": "examination_regulations.pdf"
+    },
+    {
+      "id": "ex_003",
+      "question": "How is the final grade calculated?",
+      "category": "examination",
+      "expected_source": "examination_regulations.pdf"
+    },
+    {
+      "id": "ex_004",
+      "question": "What happens if a student is caught using unfair means during an exam?",
+      "category": "examination",
+      "expected_source": "examination_regulations.pdf"
+    },
+    {
+      "id": "ex_005",
+      "question": "Can a student apply for re-evaluation of answer scripts?",
+      "category": "examination",
+      "expected_source": "examination_regulations.pdf"
+    },
+    {
+      "id": "ex_006",
+      "question": "What are the passing criteria for each subject?",
+      "category": "examination",
+      "expected_source": "examination_regulations.pdf"
+    },
+    {
+      "id": "ex_007",
+      "question": "What documents must be carried to the examination hall?",
+      "category": "examination",
+      "expected_source": "examination_regulations.pdf"
+    },
+    {
+      "id": "pl_001",
+      "question": "Which companies participated in campus placements this year?",
+      "category": "placement",
+      "expected_source": "placements.pdf"
+    },
+    {
+      "id": "pl_002",
+      "question": "What is the average salary package offered during placements?",
+      "category": "placement",
+      "expected_source": "placements.pdf"
+    },
+    {
+      "id": "pl_003",
+      "question": "What is the highest CTC offered in campus placements?",
+      "category": "placement",
+      "expected_source": "placements.pdf"
+    },
+    {
+      "id": "pl_004",
+      "question": "How many students were placed through campus recruitment?",
+      "category": "placement",
+      "expected_source": "placements.pdf"
+    },
+    {
+      "id": "pl_005",
+      "question": "What sectors recruited students this placement season?",
+      "category": "placement",
+      "expected_source": "placements.pdf"
+    },
+    {
+      "id": "pl_006",
+      "question": "Are internship opportunities available through the placement cell?",
+      "category": "placement",
+      "expected_source": "placements.pdf"
+    },
+    {
+      "id": "other_001",
+      "question": "What is the capital of France?",
+      "category": "other",
+      "expected_source": null,
+      "expected_not_found": true
+    }
+  ]
+}

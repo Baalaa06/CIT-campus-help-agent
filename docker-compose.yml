@@ -1,0 +1,58 @@
+version: "3.9"
+
+# All services share a named volume for SQLite DBs and ChromaDB data.
+# Ingestion runs once (exits 0) before the backend starts.
+
+services:
+
+  ingestion:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.ingestion
+    volumes:
+      - ./data:/app/data:ro
+      - app_storage:/app/data_store
+    env_file: .env
+    restart: "no"
+
+  backend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.backend
+    depends_on:
+      ingestion:
+        condition: service_completed_successfully
+    volumes:
+      - app_storage:/app/data_store
+    ports:
+      - "8000:8000"
+    env_file: .env
+    environment:
+      - BACKEND_HOST=0.0.0.0
+      - BACKEND_PORT=8000
+      - DATABASE_URL=sqlite+aiosqlite:///./data_store/campus_help.db
+      - CHECKPOINT_DB_PATH=./data_store/checkpoints.db
+      - CHROMA_PERSIST_DIR=./data_store/chroma_db
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 15s
+
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.frontend
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "8501:8501"
+    env_file: .env
+    environment:
+      - BACKEND_URL=http://backend:8000
+
+volumes:
+  app_storage:
+    driver: local
