@@ -1,6 +1,10 @@
 """Streamlit application entry point — CIT Help Agent."""
 import streamlit as st
+import sys
+from pathlib import Path
 
+# Add repo root to Python path so 'app' package can be imported
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 st.set_page_config(
     page_title="CIT Help Agent — Coimbatore Institute of Technology",
     page_icon="🏛️",
