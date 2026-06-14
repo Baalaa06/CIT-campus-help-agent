@@ -25,7 +25,14 @@ async def lifespan(app: FastAPI):
     configure_langsmith()
 
     # 2. Initialise Firestore
-    sa = json.loads(settings.firebase_service_account_json)
+    import os
+    sa_path = settings.firebase_service_account_path
+    if os.path.exists(sa_path):
+        with open(sa_path, "r") as f:
+            sa = json.load(f)
+    else:
+        # Fallback: read from env var (Render deployment)
+        sa = json.loads(settings.firebase_service_account_json)
     init_firestore(sa)
     print("[Startup] Firestore initialised.")
 

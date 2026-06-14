@@ -1,4 +1,4 @@
-"""Singleton wrapper around embedded ChromaDB."""
+"""Singleton wrapper around embedded ChromaDB using HuggingFace Inference API for embeddings."""
 from __future__ import annotations
 
 from functools import lru_cache
@@ -6,17 +6,16 @@ from pathlib import Path
 
 import chromadb
 from langchain_chroma import Chroma
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEndpointEmbeddings
 
 from config.settings import settings
 
 
 @lru_cache(maxsize=1)
-def get_embedding_function() -> HuggingFaceEmbeddings:
-    return HuggingFaceEmbeddings(
-        model_name=settings.embedding_model,
-        model_kwargs={"device": settings.embedding_device},
-        encode_kwargs={"normalize_embeddings": True},
+def get_embedding_function() -> HuggingFaceEndpointEmbeddings:
+    return HuggingFaceEndpointEmbeddings(
+        model=f"https://api-inference.huggingface.co/models/{settings.embedding_model}",
+        huggingfacehub_api_token=settings.huggingface_api_key,
     )
 
 

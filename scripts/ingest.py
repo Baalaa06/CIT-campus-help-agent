@@ -22,7 +22,13 @@ from config.settings import settings
 
 async def main(data_dir: str) -> None:
     print("[Ingest] Initialising Firestore…")
-    sa = json.loads(settings.firebase_service_account_json)
+    import os
+    sa_path = settings.firebase_service_account_path
+    if os.path.exists(sa_path):
+        with open(sa_path, "r") as f:
+            sa = json.load(f)
+    else:
+        sa = json.loads(settings.firebase_service_account_json)
     init_firestore(sa)
 
     print(f"[Ingest] Starting ingestion from: {data_dir}")

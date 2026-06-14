@@ -13,8 +13,9 @@ class Settings(BaseSettings):
     temperature: float = 0.1
 
     # Firebase
-    firebase_service_account_json: str = Field(..., description="Firebase service account JSON string")
-    firebase_web_api_key: str = Field(..., description="Firebase Web API key")
+    firebase_service_account_path: str = Field(default="./firebase-service-account.json", description="Path to Firebase service account JSON file")
+    firebase_service_account_json: str = Field(default="{}", description="Firebase service account JSON string (used on Render)")
+    firebase_web_api_key: str = Field(default="", description="Firebase Web API key")
 
     # LangGraph checkpointer (SQLite — internal only)
     checkpoint_db_path: str = "./data_store/checkpoints.db"
@@ -31,10 +32,13 @@ class Settings(BaseSettings):
     rerank_top_k: int = 3
     confidence_threshold: float = 0.7
 
-    # Embeddings
+    # Embeddings — HuggingFace Inference API (no local model download)
     embedding_model: str = "BAAI/bge-small-en-v1.5"
-    reranker_model: str = "BAAI/bge-reranker-base"
-    embedding_device: str = "cpu"
+    huggingface_api_key: str = Field(default="", description="HuggingFace API token for inference API")
+
+    # Reranker — Cohere API (free tier 1000 calls/month)
+    cohere_api_key: str = Field(default="", description="Cohere API key for reranking")
+    rerank_top_k: int = 3
 
     # LangSmith (optional)
     langchain_tracing_v2: str = "false"

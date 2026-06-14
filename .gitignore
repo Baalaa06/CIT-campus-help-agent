@@ -1,0 +1,21 @@
+# Firebase service account — NEVER commit this
+firebase-service-account.json
+
+# Secrets
+.env
+.streamlit/secrets.toml
+
+# Data store (ChromaDB + SQLite)
+data_store/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/

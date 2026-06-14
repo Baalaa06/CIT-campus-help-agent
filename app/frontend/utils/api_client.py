@@ -5,10 +5,9 @@ import streamlit as st
 
 import requests
 
-# Read backend URL from Streamlit secrets (set on Streamlit Cloud)
-# Falls back to localhost for local dev
+# Read backend URL from Streamlit secrets, fallback to localhost for local dev
 try:
-    BACKEND_URL = st.secrets.get("BACKEND_URL", "http://localhost:8000")
+    BACKEND_URL = st.secrets["BACKEND_URL"]
 except Exception:
     BACKEND_URL = "http://localhost:8000"
 

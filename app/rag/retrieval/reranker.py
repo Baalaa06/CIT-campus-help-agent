@@ -1,17 +1,10 @@
-"""BAAI/bge-reranker-base cross-encoder reranker (top-k=3)."""
+"""Cohere Rerank API — replaces local BGE cross-encoder, zero RAM cost."""
 from __future__ import annotations
 
-from functools import lru_cache
-
+import cohere
 from langchain_core.documents import Document
-from sentence_transformers import CrossEncoder
 
 from config.settings import settings
-
-
-@lru_cache(maxsize=1)
-def _get_reranker() -> CrossEncoder:
-    return CrossEncoder(settings.reranker_model)
 
 
 def rerank_documents(
@@ -19,21 +12,23 @@ def rerank_documents(
     docs: list[Document],
     top_k: int | None = None,
 ) -> list[Document]:
-    """Score all docs against the query and return the top-k highest-scoring."""
     if not docs:
         return []
 
     k = top_k or settings.rerank_top_k
-    reranker = _get_reranker()
+    co = cohere.Client(api_key=settings.cohere_api_key)
 
-    pairs = [(query, doc.page_content) for doc in docs]
-    scores: list[float] = reranker.predict(pairs).tolist()
+    results = co.rerank(
+        model="rerank-english-v3.0",
+        query=query,
+        documents=[doc.page_content for doc in docs],
+        top_n=k,
+    )
 
-    scored = sorted(zip(scores, docs), key=lambda x: x[0], reverse=True)
+    reranked: list[Document] = []
+    for hit in results.results:
+        doc = docs[hit.index]
+        doc.metadata["rerank_score"] = round(hit.relevance_score, 4)
+        reranked.append(doc)
 
-    results: list[Document] = []
-    for score, doc in scored[:k]:
-        doc.metadata["rerank_score"] = round(float(score), 4)
-        results.append(doc)
-
-    return results
+    return reranked
