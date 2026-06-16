@@ -14,7 +14,7 @@ from config.settings import settings
 @lru_cache(maxsize=1)
 def get_embedding_function() -> HuggingFaceEndpointEmbeddings:
     return HuggingFaceEndpointEmbeddings(
-        model=f"https://api-inference.huggingface.co/models/{settings.embedding_model}",
+        model=settings.embedding_model,
         huggingfacehub_api_token=settings.huggingface_api_key,
     )
 
